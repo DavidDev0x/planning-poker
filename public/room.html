@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sala - Planning Poker</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="room-layout">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-title">
+        <span id="room-name">Carregando...</span>
+        <button id="btn-share" class="btn" title="Copiar link da sala">🔗 Copiar Link</button>
+      </div>
+      <div class="header-actions">
+        <div id="timer-display" class="timer hidden">00:00</div>
+        <button id="btn-timer" class="btn hidden">⏱️ Iniciar Timer</button>
+        <button id="btn-settings" class="btn hidden">⚙️ Configurações</button>
+      </div>
+    </header>
+
+    <!-- Sidebar (Backlog) -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3 style="font-size: 1rem; font-weight: 600;">Histórias</h3>
+        <button id="btn-add-story" class="btn hidden">+ Adicionar</button>
+      </div>
+      <div class="story-list" id="story-list">
+        <!-- Preenchido via JS -->
+      </div>
+    </aside>
+
+    <!-- Main Area -->
+    <main class="main-area">
+      <!-- Mesa com Cartas -->
+      <div class="table-area">
+        <div class="table-container" id="table-container">
+          <!-- Participantes preenchidos via JS -->
+        </div>
+      </div>
+
+      <!-- Ações da Mesa (Facilitador) -->
+      <div class="table-actions hidden" id="facilitator-actions">
+        <button id="btn-reveal" class="btn btn-primary">Revelar Votos</button>
+        <button id="btn-reset" class="btn">Nova Rodada</button>
+      </div>
+
+      <!-- Resultados (Após revelar) -->
+      <div id="results-panel" class="results-panel hidden">
+        <div class="stats-row">
+          <div class="stat-box" id="stat-consensus-box">
+            <div class="stat-label">Consenso</div>
+            <div class="stat-value" id="stat-consensus">-</div>
+            <div id="badge-consensus" class="consensus-badge hidden">Consenso Atingido!</div>
+          </div>
+          <div class="stat-box hidden" id="stat-avg-box">
+            <div class="stat-label">Média</div>
+            <div class="stat-value" id="stat-average">-</div>
+          </div>
+          <div class="stat-box hidden" id="stat-closest-box">
+            <div class="stat-label">Carta Mais Próxima</div>
+            <div class="stat-value" id="stat-closest">-</div>
+          </div>
+        </div>
+        <div id="chart-container" style="max-width: 400px; margin: 0 auto; width: 100%;">
+          <!-- Gráfico de barras simples -->
+        </div>
+      </div>
+
+      <!-- Mão do Usuário (Cartas para votar) -->
+      <div class="hand-area" id="hand-area">
+        <!-- Cartas preenchidas via JS -->
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <!-- Dialog: Adicionar História -->
+  <dialog id="dialog-story" closedby="any">
+    <div class="dialog-header">
+      <h2>Adicionar História</h2>
+      <button class="btn" onclick="document.getElementById('dialog-story').close()">✕</button>
+    </div>
+    <form id="form-story">
+      <div class="form-group">
+        <label for="story-title">Título/Link da História</label>
+        <input type="text" id="story-title" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Adicionar</button>
+    </form>
+  </dialog>
+
+  <!-- Dialog: Timer -->
+  <dialog id="dialog-timer" closedby="any">
+    <div class="dialog-header">
+      <h2>Iniciar Cronômetro</h2>
+      <button class="btn" onclick="document.getElementById('dialog-timer').close()">✕</button>
+    </div>
+    <form id="form-timer">
+      <div class="form-group">
+        <label for="timer-minutes">Duração (Minutos)</label>
+        <input type="number" id="timer-minutes" min="1" max="60" value="5" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Iniciar</button>
+    </form>
+  </dialog>
+
+  <!-- Template: Participante na Mesa -->
+  <template id="tpl-participant">
+    <div class="participant">
+      <div class="card-wrapper">
+        <div class="card">
+          <div class="card-face card-front"></div>
+          <div class="card-face card-back"></div>
+        </div>
+      </div>
+      <div class="participant-name"></div>
+      <div class="participant-role"></div>
+    </div>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/realtime.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/room.js"></script>
+</body>
+</html>

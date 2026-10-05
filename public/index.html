@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planning Poker</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <div class="home-container">
+    <h1>Planning Poker</h1>
+    
+    <div class="home-tabs">
+      <button class="btn btn-primary" id="tab-join">Entrar em uma Sala</button>
+      <button class="btn" id="tab-create">Criar Nova Sala</button>
+    </div>
+
+    <!-- Formulário de Entrada -->
+    <form id="form-join">
+      <div class="form-group">
+        <label for="join-room-id">ID da Sala</label>
+        <input type="text" id="join-room-id" required placeholder="Ex: sala-123">
+      </div>
+      <div class="form-group">
+        <label for="join-name">Seu Nome</label>
+        <input type="text" id="join-name" required placeholder="Seu nome">
+      </div>
+      <div class="form-group">
+        <label for="join-role">Seu Papel</label>
+        <select id="join-role">
+          <option value="voter">Votante</option>
+          <option value="observer">Observador</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
+    </form>
+
+    <!-- Formulário de Criação -->
+    <form id="form-create" class="hidden">
+      <div class="form-group">
+        <label for="create-name">Nome da Sala</label>
+        <input type="text" id="create-name" required placeholder="Ex: Sprint 42">
+      </div>
+      <div class="form-group">
+        <label for="create-deck">Baralho</label>
+        <select id="create-deck">
+          <option value="fibonacci">Fibonacci (0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ?, ☕)</option>
+          <option value="modified_fibonacci">Fibonacci Modificado (0, ½, 1, 2, 3, 5, 8, 13, 20, 40, 100, ?, ☕)</option>
+          <option value="tshirt">T-Shirt Sizes (XS, S, M, L, XL, XXL, ?, ☕)</option>
+          <option value="powers_of_2">Potências de 2 (0, 1, 2, 4, 8, 16, 32, 64, ?, ☕)</option>
+          <option value="trust_vote">Voto de Confiança (1, 2, 3, 4, 5)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="create-user-name">Seu Nome (Facilitador)</label>
+        <input type="text" id="create-user-name" required placeholder="Seu nome">
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Criar Sala</button>
+    </form>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="/js/home.js"></script>
+</body>
+</html>
