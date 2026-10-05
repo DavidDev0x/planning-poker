@@ -85,7 +85,9 @@ class RealtimeClient {
 
     this.channel.subscribe(async (status) => {
       if (status === 'SUBSCRIBED') {
-        await this.channel.track({ online_at: new Date().toISOString() });
+        this.channel.track({ online_at: new Date().toISOString() }).catch(err => {
+          console.warn('Erro não-fatal no Presence track (409):', err.message);
+        });
       } else if (status === 'CLOSED') {
         console.log('Supabase Channel Fechado');
       } else if (status === 'CHANNEL_ERROR') {
@@ -109,7 +111,13 @@ class RealtimeClient {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Ação falhou');
-      return data; // O broadcast virá via canal de tempo real
+      
+      // Atualização otimista/fallback: aplica o estado retornado pela API imediatamente
+      if (data.state && this.onStateChange) {
+        this.onStateChange(data.state);
+      }
+      
+      return data; // O broadcast virá via canal de tempo real (se funcionar para outros)
     } catch (err) {
       if (this.onError) this.onError(err.message);
       throw err;
