@@ -5,7 +5,7 @@
   "description": "Planning Poker em tempo real para até 15 participantes (Vercel + Supabase).",
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": "20.x"
   },
   "scripts": {
     "dev": "node --env-file-if-exists=.env dev-server.js",
